@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiLogIn, FiMail, FiLock } from 'react-icons/fi';
 
 import { Container, Content } from './styles';
@@ -10,16 +10,21 @@ import Button from '../../components/Button';
 import api from '../../services/api';
 
 const Login: React.FC = () => {
+    const history = useHistory();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    async function handleSubmit(): Promise<void> {
+    async function handleSubmit(
+        e: React.FormEvent<HTMLFormElement>,
+    ): Promise<void> {
+        e.preventDefault();
         await api
             .post('/sessions', { email, password })
             .then((response) => {
                 const { token, user } = response.data;
                 localStorage.setItem('JWT', token);
                 localStorage.setItem('user', JSON.stringify(user));
+                history.push('/home');
             })
             .catch(() => {
                 alert('Não foi possível fazer login');

@@ -15,14 +15,18 @@ const Register: React.FC = () => {
     const [password, setPassword] = useState('');
     const history = useHistory();
 
-    async function handleSubmit(): Promise<void> {
+    async function handleSubmit(
+        e: React.FormEvent<HTMLFormElement>,
+    ): Promise<void> {
+        e.preventDefault();
         await api
             .post('/users', { name, email, password })
             .then((response) => {
                 history.push('/');
             })
-            .catch(() => {
-                alert('Não foi possível cadastrar!');
+            .catch((error) => {
+                alert('Falha em cadastrar o usuário');
+                console.log(error);
             });
     }
 

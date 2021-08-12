@@ -3,7 +3,9 @@ import CreateUserService from '../services/CreateUserService';
 
 const usersRouter = Router();
 
-usersRouter.post('/', async (request, response) =>{
+usersRouter.post('/', async (request, response) => {
+
+    try {
 
         const { name, email, password } = request.body;
 
@@ -17,7 +19,10 @@ usersRouter.post('/', async (request, response) =>{
 
         delete user.password;
 
-        return response.json(user);
+        return response.status(200).json(user);
+    } catch (err) {
+        return response.status(400).json({ error: err.message });
+    }
 });
 
 export default usersRouter;
