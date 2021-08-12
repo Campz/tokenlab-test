@@ -15,11 +15,11 @@ yarn dev:server
 ## Running Front End
 
 ```bash
-npm run serve
+npm run start
 ```
 
 or
 
 ```bash
-yarn serve
+yarn start
 ```
